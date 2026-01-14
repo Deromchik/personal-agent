@@ -1,0 +1,220 @@
+Die Transformationsarchitektur der Volkswagen AG: Eine systemische Analyse der Tätigkeit und des strategischen Einflusses von Dr. Arno Antlitz
+
+Der Prozess des grundlegenden Umbaus der Volkswagen AG, eines der mächtigsten Industriekonglomerate der Welt, ist in den 2020er Jahren untrennbar mit der Person von Dr. Arno Antlitz verbunden. In seiner für die Branche einzigartigen Doppelrolle als Chief Financial Officer (CFO) und Chief Operating Officer (COO) des Konzerns agiert Antlitz nicht bloß als Kapitalverwalter, sondern als Hauptarchitekt des neuen Betriebsmodells des Unternehmens. Sein Ansatz, der auf einer Kombination aus technischer Präzision und strikter Finanzdisziplin basiert, ist die Antwort auf existenzielle Herausforderungen: den Übergang zur Elektromobilität, die Digitalisierung und geopolitische Instabilität. Dieser Bericht bietet eine tiefgehende Untersuchung seiner Biografie, seines Karriereweges, der wichtigsten strategischen Initiativen und seiner Managementphilosophie, die die Zukunft der deutschen Automobilindustrie bestimmen.
+
+Akademische Wurzeln und Formung des analytischen Weltbildes
+
+Das intellektuelle Fundament von Arno Antlitz wurde in einem Umfeld gelegt, in dem Technologie auf Wirtschaft trifft. Geboren am 30. März 1970 im Dorf Premich (Unterfranken), wuchs er in einer Gemeinde mit etwa 1.000 Einwohnern auf. Dies prägte laut Zeitzeugen Eigenschaften wie Verlässlichkeit und Geselligkeit in ihm, bei gleichzeitiger Abwesenheit von Selbstverliebtheit.¹ Seine frühe Begeisterung für Mathematik, Physik und Wirtschaft mündete in die bewusste Wahl einer Ausbildung, die diese Disziplinen vereinte.
+
+Das Studium an der Technischen Universität Darmstadt im Fachbereich Wirtschaftsingenieurwesen mit Fokus auf Maschinenbau war ein entscheidender Schritt. In den 1980er Jahren war Darmstadt eine der wenigen Universitäten, die einen solchen interdisziplinären Ansatz anboten.² Antlitz zeigte besonderes Interesse an Thermodynamik – einem Fach, das viele Studenten aufgrund seiner Komplexität mieden – sowie an der Produktentwicklung.² Die Teilnahme an internationalen Robotik-Wettbewerben (insbesondere dem International Design Contest), bei denen sein Team siegte und die Möglichkeit zur Zusammenarbeit mit dem Massachusetts Institute of Technology (MIT) erhielt, demonstrierte seine Fähigkeit zur Teamarbeit an komplexen technischen Aufgaben unter Zeitdruck.²
+
+Sein weiterer akademischer Weg führte ihn an die WHU – Otto Beisheim School of Management in Koblenz, wo er zum Dr. rer. pol. promovierte. Während seiner Dissertation beschränkte sich Antlitz nicht auf die Theorie, sondern gründete eine studentische Unternehmensberatung, was seine erste Erfahrung in der praktischen Wirtschaftsberatung darstellte.² Diese Synthese aus Ingenieurslogik und ökonomischer Strategie wurde zu seinem wichtigsten Instrument für die „analytische Durchdringung verschiedener Bereiche und die Lösungsfindung für komplexe Fragestellungen“.²
+
+Wichtige Stationen der akademischen und frühen beruflichen Ausbildung
+Zeitraum	Institution / Organisation	Qualifikation / Rolle
+1980er – 1990er	TU Darmstadt	Diplom-Wirtschaftsingenieur (Maschinenbau)
+1990er	WHU Koblenz	Doktor der Staatswissenschaften (Dr. rer. pol.)
+1999–2004	McKinsey & Company	Associate Principal
+2004	Volkswagen AG	Karrierestart im Konzern
+
+Die fünfjährige Tätigkeit bei McKinsey & Company ermöglichte es Antlitz, sich auf Strategie, Organisationsoptimierung und Kostenmanagement in der Automobil- und Zulieferindustrie zu spezialisieren.¹ Diese Erfahrung machte ihn zum idealen Kandidaten für Volkswagen, wo er Methoden der externen Beratung auf interne Prozesse der Großserienproduktion anwenden konnte.
+
+Aufstieg in der Hierarchie von Volkswagen: Vom Controlling zum strategischen Management
+
+Die Karriere von Arno Antlitz bei der Volkswagen Aktiengesellschaft begann im Jahr 2004. Bereits 2005 übernahm er das globale Produktcontrolling der Marke Volkswagen, was ein tiefes Verständnis des Zusammenhangs zwischen technischen Fahrzeugmerkmalen und deren Rentabilität erforderte.¹
+
+Ab dem 1. Januar 2010 trat Antlitz in den Markenvorstand von Volkswagen Pkw ein und verantwortete die Bereiche Controlling und Rechnungswesen.² Während seiner zehnjährigen Amtszeit spielte er eine Schlüsselrolle bei der Entwicklung und Umsetzung des „Zukunftspakts“ – eines umfassenden Restrukturierungsprogramms zur Effizienzsteigerung der Kernmarke im Kontext des Dieselskandals und der Notwendigkeit von Investitionen in Elektrofahrzeuge.¹ Seine Arbeit an Sanierungsplänen (Turnaround Plans) in verschiedenen Weltregionen festigte seinen Ruf als Krisenmanager, der fähig ist, unpopuläre, aber notwendige finanzielle Entscheidungen zu treffen.
+
+Transit über Audi und Berufung auf Konzernebene
+
+Eine kurze, aber intensive Phase bei der AUDI AG (vom 1. März 2020 bis 31. März 2021) als Vorstand für Finanz, China und Recht war der letzte Schritt vor seinem Wechsel auf die Konzernebene.¹ In Ingolstadt sammelte er entscheidende Erfahrungen in der Steuerung des Premiumsegments und vertiefte sein Verständnis des chinesischen Marktes, der die wichtigste Gewinnquelle des Konzerns darstellt.
+
+Am 1. April 2021 berief der Aufsichtsrat der Volkswagen AG Dr. Antlitz als Nachfolger von Frank Witter zum Finanzvorstand (CFO) des gesamten Konzerns.⁶ Der Aufsichtsratsvorsitzende Hans Dieter Pötsch charakterisierte ihn als Manager, der „strategische Weitsicht mit finanzieller Expertise“ verbindet, was für die Führung des Unternehmens durch die Transformation überlebenswichtig sei.⁶ Später, im September 2022, wurden seine Befugnisse um die Position des Chief Operating Officer (COO) erweitert, wodurch faktisch die Steuerung sowohl der Finanzen als auch der operativen Prozesse aller Konzernmarken in seiner Hand gebündelt wurde.²
+
+Strategie „Value over Volume“: Die Philosophie des neuen Volkswagen
+
+Unter der Führung von Antlitz vollzog die Volkswagen AG einen fundamentalen Wandel von der historischen Jagd nach Absatzvolumen hin zur Priorisierung von Marge und Wertschöpfung. Antlitz argumentiert, dass das Unternehmen in der Vergangenheit versucht habe, die Rentabilität durch Volumenwachstum zu steigern, die Transformation der Branche jedoch ein neues Paradigma erfordere.⁸
+
+Dieser Ansatz, bekannt als „Value over Volume“ (Wert vor Volumen), basiert auf drei Prinzipien:
+
+Investitionsdisziplin: Jede Marke ist für ihre eigenen Renditeziele verantwortlich.⁸
+
+Senkung der Fixkosten: Ziel ist es, auch bei Nachfrageschwankungen Resilienz zu erreichen.⁸
+
+Optimierung des Produktmixes: Fokus auf margenstarke Modelle und Dienstleistungen.⁸
+
+Der Konzern hat sich das ehrgeizige Ziel gesetzt, bis 2030 eine Umsatzrendite von 
+9
+–
+11
+%
+9–11%
+ zu erreichen.⁸ Um dies zu realisieren, führte Antlitz ein Benchmarking-System ein, bei dem jede Marke mit den besten Wettbewerbern in ihrem Segment verglichen wird.
+
+Transformation der „Profit Pools“
+
+Antlitz sieht die Entwicklung des Unternehmens als Übergang von einer einzigen Gewinnquelle (Verbrennungsmotoren) zu drei separaten Pools, die sich bis 2030 entwickeln werden:
+
+Verbrenner (ICE): Generieren Mittel zur Finanzierung der Transformation.⁹
+
+Elektrofahrzeuge (BEV): Ein schnell wachsendes Segment, das massive Skaleneffekte erfordert.⁹
+
+Software: Eine neue Gewinnquelle aus digitalen Diensten, die nach 2030 signifikant werden soll.⁹
+
+Zur Unterstützung dieser Struktur besteht Antlitz auf der Aufrechterhaltung einer hohen Nettoliquidität im Automobilbereich von etwa 40 Milliarden Euro, was er als „Versicherung“ für die Umsetzung der Transformation bezeichnet.⁹
+
+Porsche IPO und Hebung von Vermögenswerten
+
+Eine der aufsehenerregendsten Leistungen von Arno Antlitz als CFO war die Durchführung des Börsengangs (IPO) der Porsche AG im Jahr 2022. Diese Transaktion zielte nicht nur auf die Kapitalbeschaffung für Investitionen in Elektrofahrzeuge und Software ab, sondern auch auf die Erhöhung der Transparenz und der Bewertung des gesamten Konzerns.¹⁰
+
+Antlitz spielte eine Schlüsselrolle bei der Vorbereitung des IPOs, präsentierte Details vor Investoren und stellte die Einhaltung komplexer Regeln zur Machtverteilung zwischen den Familien Porsche-Piëch und externen Aktionären sicher.¹¹ Als Ergebnis des IPO erhielt die Porsche AG mehr Autonomie, was ihr eine schnellere Entwicklung ermöglichte, während sie gleichzeitig Teil des technologischen Ökosystems der Volkswagen Group (Mechatronik, Software, Batterien) blieb.¹⁰
+
+Einfluss des IPO auf die Konzernstruktur:
+
+Kennzahl	Wert / Status nach IPO
+Platzierungsvolumen	Eines der größten IPOs in der Geschichte Europas ¹¹
+VW AG Anteil an Porsche AG	Beibehaltung der Mehrheit mit voller Konsolidierung ¹⁰
+Mittelverwendung	Finanzierung der Strategie „NEW AUTO“ (Software, Batterien) ¹⁰
+Rolle von Antlitz	Mitglied des Aufsichtsrats der Porsche AG ⁵
+
+Dieser Schritt ermöglichte es Volkswagen, den verborgenen Wert seiner Marken zu demonstrieren, was Teil der breiteren Strategie von Antlitz ist, den Konzern in ein modernes Technologieunternehmen zu verwandeln.
+
+„Future Volkswagen“: Harte Restrukturierung und sozialer Dialog
+
+In seiner Funktion als COO initiierte Antlitz das Programm „Future Volkswagen“, den ambitioniertesten Versuch einer Kostenreform in Deutschland seit Jahrzehnten. Das Programm sieht mittelfristig Netto-Einspareffekte in Höhe von über 4 Milliarden Euro vor.¹³
+
+Zu den wichtigsten Parametern des Programms gehören:
+
+Personalabbau: Reduzierung der Arbeitsplätze an deutschen Standorten um mehr als 35.000 bis 2030.¹³
+
+Produktivität der Werke: Zielvorgabe zur Senkung der Fabrikkosten um 
+30
+%
+30%
+ in Wolfsburg, Emden und Zwickau.¹⁵
+
+Neuer Tarifvertrag: Überarbeitung der Arbeitsbedingungen zur Steigerung der Wettbewerbsfähigkeit.¹³
+
+Antlitz betont, dass diese Maßnahmen nicht nur für das bloße Überleben notwendig sind, sondern um wirtschaftliche Bedingungen zu schaffen, unter denen die Transformation überhaupt möglich wird. Er räumt ein, dass die Verhandlungen mit den Gewerkschaften „hart“ waren, hält das Ergebnis jedoch für fair im Hinblick auf die Zukunft des Unternehmens.¹³
+
+Technologische vertikale Integration: PowerCo und Batteriestrategie
+
+Um die Kosten in der Wertschöpfungskette von Elektrofahrzeugen zu kontrollieren, unterstützte Antlitz die Gründung der PowerCo SE – eines separaten Unternehmens zur Steuerung aller Batterieaktivitäten des Konzerns.⁸ Diese Entscheidung wurde durch den „Wahnsinn“ auf dem Rohstoffmarkt diktiert, wo sich Preise verdoppelten oder verdreifachten.¹⁷
+
+Die Strategie von PowerCo basiert auf dem Konzept der „Unified Cell“ (Einheitszelle). Dabei handelt es sich um ein standardisiertes Batteriedesign, das in 
+80
+%
+80%
+ der Konzernmodelle verwendet werden kann, was kolossale Skaleneffekte ermöglicht.⁸
+
+Bestandteile der Batteriestrategie unter Aufsicht von Antlitz:
+
+Lokalisierung: Bau von Gigafactories in Salzgitter (Deutschland), Valencia (Spanien) und St. Thomas (Kanada).⁸
+
+Partnerschaften: Joint Venture mit Umicore zur Produktion von Kathodenmaterialien.⁹
+
+Rohstoffsicherheit: Memorandum mit der kanadischen Regierung zur Sicherung der Lieferketten in Nordamerika.⁹
+
+Antlitz merkt an, dass der Konzern das Tempo des Kapazitätsaufbaus bei PowerCo an den tatsächlichen Marktbedarf anpasst, dabei aber die technologische Führerschaft behält.¹³
+
+Software und Partnerschaft mit Rivian
+
+Der Softwarebereich bleibt der schwierigste Teil der Transformation. Antlitz erkennt an, dass die Entwicklung eigener Software durch die Einheit CARIAD entscheidend ist, um die Kontrolle über Daten und Fahrzeugfunktionen zu behalten.⁹ Aufgrund hoher Kosten und Verzögerungen wurde die Strategie jedoch zugunsten von „Smart Partnerships“ korrigiert.
+
+Der wichtigste Schritt war die Ankündigung eines Joint Ventures mit dem US-Elektrofahrzeughersteller Rivian im Jahr 2024. Diese Partnerschaft ermöglicht es Volkswagen, die fortschrittliche Softwarearchitektur von Rivian für seine zukünftigen Modelle zu nutzen, was Entwicklungszeiten und Kosten erheblich reduziert.¹³
+
+Aspekt der Partnerschaft mit Rivian	Beschreibung und finanzielle Verpflichtungen
+Investitionsvolumen	Anfänglich 1 Mrd. USD mit möglicher Erhöhung auf bis zu 5 Mrd. USD ¹⁸
+Technologisches Ziel	Schaffung einer branchenführenden Softwareplattform ¹⁸
+Auswirkung auf Kosten	Senkung zukünftiger F&E-Kosten durch gemeinsame Anstrengungen ¹³
+Rolle von Antlitz	Leitung der finanziellen Strukturierung und Bewertung von Synergien ¹⁸
+
+Dieser Deal wurde zum Beweis für den Pragmatismus von Antlitz: Er ist bereit, die Idee der Entwicklung „alles im eigenen Haus“ aufzugeben, wenn eine Partnerschaft einen schnelleren und günstigeren Weg zum Ziel bietet.
+
+Geopolitische Herausforderungen: China und USA
+
+Antlitz steuert die Finanzen des Konzerns unter den Bedingungen eines wachsenden Handelsprotektionismus. Als größte externe Risiken sieht er US-Zölle und den Wettbewerbsdruck in China.
+
+China-Strategie: „In China, for China“
+In China sieht sich Volkswagen mit sinkendem operativen Gewinn und Marktanteilsverlusten durch lokale Marken wie BYD konfrontiert. Die Strategie von Antlitz sieht vor:
+
+Beschleunigung der Markteinführung neuer Modelle auf 24–34 Monate.²⁰
+
+Lokalisierung der Software- und Elektronikentwicklung durch Partnerschaften (z. B. mit Xpeng).¹³
+
+Erwarteter Gewinnrückgang in China im Jahr 2025 mit anschließender Stabilisierung.¹³
+
+Nordamerika: Das dritte Standbein
+Um die Abhängigkeit von China und Europa auszubalancieren, stärkt Antlitz die Präsenz in den USA. Dies umfasst:
+
+Wiederbelebung der Marke Scout als Hersteller elektrischer SUVs und Pickups.²²
+
+Ausbau der Produktion in Chattanooga und potenzielle Lokalisierung von Audi.²⁴
+
+Verdoppelung des Marktanteils in den USA auf 
+8
+%
+8%
+ bis 2030 (obwohl das Ziel früher bei 
+10
+%
+10%
+ lag).²⁴
+
+Antlitz bewertet die Auswirkungen der US-Zölle nüchtern und erwartet, dass diese bestehen bleiben und den Konzern jährlich bis zu 5 Milliarden Euro kosten könnten.²⁵
+
+Finanzanalyse 2024–2025: Zwischen Investitionen und Restrukturierung
+
+Die Berichterstattung unter der Leitung von Antlitz spiegelt eine schwierige Übergangsphase wider. Das Geschäftsjahr 2024 endete mit einem Umsatz von 325 Milliarden Euro, das operative Ergebnis sank jedoch um 
+15
+%
+15%
+ aufgrund von Restrukturierungskosten.²⁶
+
+Vergleich der Ergebnisse 9 Monate 2025 und 2024:
+
+Kennzahl	9M 2025	9M 2024	Veränderung
+Umsatzerlöse	€238,7 Mrd.	€237,3 Mrd.	+1%
+Operatives Ergebnis	€5,4 Mrd.	€12,8 Mrd.	-58%
+Operative Marge	2,3%	5,4%	-3,1 Pp.
+Netto-Cashflow (Auto)	€1,8 Mrd.	€3,4 Mrd.	-47%
+Fahrzeugverkäufe (Einh.)	6,6 Mio.	6,5 Mio.	+1%
+
+Der drastische Gewinnrückgang im Jahr 2025 erklärt sich nicht nur durch US-Zölle und Anlaufkosten neuer Modelle, sondern auch durch Abschreibungen im Zusammenhang mit der Überarbeitung der Produktstrategie bei Porsche und Audi.²⁷ Antlitz charakterisierte dies als „gemischtes Bild“, bei dem der Erfolg neuer Produkte durch hohe Fixkosten nivelliert wird.²⁷
+
+„Savings Shock“ 2026
+Aufgrund des erwarteten negativen Cashflows im Jahr 2026 (ca. 7 Mrd. Euro laut einigen Prognosen) stellte Antlitz die Forderung nach zusätzlichen Einsparungen von 12 Milliarden Euro auf.²² Dies beinhaltet den Stopp einiger Projekte und eine radikale Kürzung von Investitionen in zweitrangige Bereiche.
+
+Führungsstil und Unternehmenskultur
+
+Arno Antlitz verkörpert das Bild des „Ingenieur-Finanziers“. Sein Führungsstil wird als ruhig, analytisch und autoritär beschrieben, jedoch frei von Arroganz.² Er bevorzugt digitales Bezahlen, trägt selten Bargeld bei sich und ist fasziniert von der Fähigkeit der Thermodynamik, komplexe Systeme zu beschreiben.²
+
+Eines der Hauptmerkmale seiner Führung ist Transparenz bezüglich der Herausforderungen. Er verheimlicht nicht, dass die Transformation von „ein oder zwei schwierigen Entscheidungen“ begleitet sein wird.² Gleichzeitig demonstriert er Solidarität mit dem Unternehmen, indem er einer 5-prozentigen Kürzung seines eigenen Gehalts im Jahr 2024 und weiteren Verzichten auf Teile der Vergütung in den folgenden fünf Jahren zustimmte, um das Sparprogramm zu unterstützen.²⁸
+
+Führungsgremien und Einflussbereiche
+
+Antlitz bündelt erhebliche Kontrolle durch den Vorsitz in Aufsichtsräten von Schlüsseleinheiten:
+
+Volkswagen Financial Services AG: Sicherstellung der finanziellen Unterstützung von Vertrieb und Mobilität.⁵
+
+Volkswagen Group of America: Strategische Kontrolle über den nordamerikanischen Markt.⁵
+
+PowerCo SE: Aufsicht über das Batteriegeschäft.⁵
+
+Porsche Holding GmbH: Einfluss auf das größte Händlernetz Europas.⁵
+
+Fazit und Prognose bis 2030
+
+Die Tätigkeit von Dr. Arno Antlitz bei der Volkswagen AG ist ein Beispiel für die systemische Transformation eines Industriegiganten unter den Bedingungen eines „perfekten Sturms“. Seine Rolle als CFO und COO ermöglichte die Synchronisierung der finanziellen Möglichkeiten des Konzerns mit seiner operativen Realität.
+
+Wichtigste Schlussfolgerungen zu seinem Einfluss:
+
+Finanzarchitektur: Schaffung eines robusten Finanzierungsmechanismus durch Ausgliederung von Vermögenswerten (Porsche IPO) und strikte Liquiditätskontrolle.⁸
+
+Operative Effizienz: Übergang zum Modell „Value over Volume“, das Rentabilität über Marktanteile stellt.⁸
+
+Strategische Flexibilität: Bereitschaft zu großen Partnerschaften (Rivian, Xpeng) zur Überwindung technologischer Rückstände.¹³
+
+Soziale Transformation: Durchführung eines massiven Personalabbaus bei gleichzeitiger Aufrechterhaltung eines konstruktiven Dialogs mit den Gewerkschaften.¹³
+
+Trotz der schwierigen Ergebnisse des Jahres 2025 und des Drucks der Weltmärkte bleibt Antlitz der wichtigste Garant dafür, dass die Volkswagen AG die Transformation nicht nur überlebt, sondern als finanziell gesundes und technologisch unabhängiges Unternehmen daraus hervorgeht. Seine „Roadmap“ bis 2030 sieht den Abschluss des Investitionszyklus in Verbrennungsmotoren und das Erreichen eines Margenniveaus vor, das mit den besten Technologieakteuren der Welt vergleichbar ist.⁸ Für Aktionäre und Partner ist Antlitz die Verkörperung von Disziplin und Rationalität, was für den Erhalt des Vertrauens in die deutsche Industrie im Zeitalter des Wandels entscheidend ist.
