@@ -10,7 +10,9 @@ import streamlit as st
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 MODEL = "gpt-4o"
 TEMPERATURE = 0.3
-PERSON_INFO_FILE_PATH = "/Users/admin/Desktop/Personal_agent/Dr. Arno Antlitz.txt"
+# Use relative path that works both locally and on GitHub
+PERSON_INFO_FILE_PATH = os.path.join(
+    os.path.dirname(__file__), "Dr. Arno Antlitz.txt")
 
 # ============================================
 # IMPORTS
@@ -425,16 +427,26 @@ def main():
 
     # Try to get API key from Streamlit secrets (for Streamlit Cloud) or use environment variable
     global OPENAI_API_KEY
+    global PERSON_INFO_FILE_PATH
     try:
         if hasattr(st, 'secrets') and 'OPENAI_API_KEY' in st.secrets:
             OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
+        # Allow overriding person info file path via secrets
+        if hasattr(st, 'secrets') and 'PERSON_INFO_FILE_PATH' in st.secrets:
+            PERSON_INFO_FILE_PATH = st.secrets['PERSON_INFO_FILE_PATH']
     except:
         pass  # If secrets not available, use environment variable
 
+    # Check if person info file path is set via environment variable
+    env_file_path = os.getenv("PERSON_INFO_FILE_PATH", "")
+    if env_file_path:
+        PERSON_INFO_FILE_PATH = env_file_path
+
     # Check API key
     if not OPENAI_API_KEY:
-        st.error("⚠️ API ключ не налаштовано. Будь ласка, налаштуйте OPENAI_API_KEY в секретах Streamlit або змінних середовища.")
-        st.info("Для локального запуску створіть файл `.streamlit/secrets.toml` з вмістом:\n```toml\nOPENAI_API_KEY = \"your-api-key-here\"\n```\n\nАбо встановіть змінну середовища:\n```bash\nexport OPENAI_API_KEY=\"your-api-key-here\"\n```")
+        st.error(
+            "⚠️ API key is not configured. Please set OPENAI_API_KEY in Streamlit secrets or environment variables.")
+        st.info("For local setup, create a `.streamlit/secrets.toml` file with the following content:\n```toml\nOPENAI_API_KEY = \"your-api-key-here\"\n```\n\nOr set an environment variable:\n```bash\nexport OPENAI_API_KEY=\"your-api-key-here\"\n```")
         st.stop()
 
     # Initialize session state
