@@ -10,9 +10,16 @@ import streamlit as st
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 MODEL = "gpt-4o"
 TEMPERATURE = 0.3
-# Use relative path that works both locally and on GitHub
-PERSON_INFO_FILE_PATH = os.path.join(
-    os.path.dirname(__file__), "Dr. Arno Antlitz.txt")
+# Available person info files
+AVAILABLE_PERSON_FILES = [
+    "Dr. Arno Antlitz.txt",
+    "Dr. Gernot Döllner.txt",
+    "Dr. Manfred Döss.txt",
+    "Hauke Stars.txt",
+    "Ralf Brandstätter.txt",
+    "Thomas Schäfer.txt",
+    "Thomas Schmall.txt"
+]
 
 # ============================================
 # IMPORTS
@@ -40,7 +47,8 @@ JOURNALIST_ASSISTANT_PROMPT = """You are Peter, a conversational agent conductin
 - **Important: Do NOT ask provocative, deep probing questions unless the person explicitly requests them or asks you to ask provocative questions**
 - It is forbidden to use meta-comments, such as "the information provided does not contain...". The interlocutor does not and should not know what information you possess or what rules you are guided by.
 - If the interlocutor asks you, for example, "Which critics claimed that?" and you don't have such information, then joke, for example, "Oh, these critics, who knows where they come from..."
-- If a person answered your question and then didn't ask or request anything from you, briefly comment on their answer and ask them "Is there anything else you would like to talk about or ask?"
+- If a person answered your question and then didn't ask or request anything from you, briefly comment on their answer and ask them "Is there anything else you would like to talk about or ask?".
+**Important: If "Is there anything else you would like to talk about or ask?" has already been asked, change the wording the second time to avoid repetition.**
 
 ## Example Question Patterns (use the same language as the conversation)
 **Important: Never repeat the same pattern twice in a conversation.**
@@ -233,8 +241,10 @@ def init_session_state():
         st.session_state.verification_results = []
     if "logs" not in st.session_state:
         st.session_state.logs = []
+    if "selected_file" not in st.session_state:
+        st.session_state.selected_file = None
     if "person_info" not in st.session_state:
-        st.session_state.person_info = load_person_info(PERSON_INFO_FILE_PATH)
+        st.session_state.person_info = ""
     if "conversation_started" not in st.session_state:
         st.session_state.conversation_started = False
 
@@ -253,7 +263,7 @@ def get_all_logs_json() -> str:
     """Get all logs as a JSON string for download."""
     log_data = {
         "export_timestamp": datetime.now().isoformat(),
-        "person_info_file": PERSON_INFO_FILE_PATH,
+        "person_info_file": st.session_state.selected_file if st.session_state.selected_file else "Not selected",
         "model": MODEL,
         "conversation": st.session_state.messages,
         "verification_results": st.session_state.verification_results,
@@ -428,20 +438,11 @@ def main():
 
     # Try to get API key from Streamlit secrets (for Streamlit Cloud) or use environment variable
     global OPENAI_API_KEY
-    global PERSON_INFO_FILE_PATH
     try:
         if hasattr(st, 'secrets') and 'OPENAI_API_KEY' in st.secrets:
             OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
-        # Allow overriding person info file path via secrets
-        if hasattr(st, 'secrets') and 'PERSON_INFO_FILE_PATH' in st.secrets:
-            PERSON_INFO_FILE_PATH = st.secrets['PERSON_INFO_FILE_PATH']
     except:
         pass  # If secrets not available, use environment variable
-
-    # Check if person info file path is set via environment variable
-    env_file_path = os.getenv("PERSON_INFO_FILE_PATH", "")
-    if env_file_path:
-        PERSON_INFO_FILE_PATH = env_file_path
 
     # Check API key
     if not OPENAI_API_KEY:
@@ -462,10 +463,36 @@ def main():
         st.markdown(
             '<div class="sub-header">Вйо до розмови</div>', unsafe_allow_html=True)
 
+        # File selection (only show before conversation starts)
+        if not st.session_state.conversation_started:
+            st.markdown("### 📁 Select Person Information File")
+
+            # Determine default index
+            default_index = 0
+            if st.session_state.selected_file and st.session_state.selected_file in AVAILABLE_PERSON_FILES:
+                default_index = AVAILABLE_PERSON_FILES.index(
+                    st.session_state.selected_file)
+
+            selected_file = st.selectbox(
+                "Choose a person to interview:",
+                options=AVAILABLE_PERSON_FILES,
+                index=default_index,
+                key="file_selector"
+            )
+
+            # Update selected file and load person info if changed or not loaded yet
+            if selected_file != st.session_state.selected_file or not st.session_state.person_info:
+                st.session_state.selected_file = selected_file
+                file_path = os.path.join(
+                    os.path.dirname(__file__), selected_file)
+                st.session_state.person_info = load_person_info(file_path)
+
         # Check if person info is loaded
         if "ERROR" in st.session_state.person_info:
             st.error(st.session_state.person_info)
-            st.info(f"Please create a file at: {PERSON_INFO_FILE_PATH}")
+            if st.session_state.selected_file:
+                st.info(
+                    f"Please check the file: {st.session_state.selected_file}")
         else:
             # Start conversation button
             if not st.session_state.conversation_started:
@@ -698,6 +725,7 @@ def main():
                 st.session_state.verification_results = []
                 st.session_state.logs = []
                 st.session_state.conversation_started = False
+                # Keep selected_file and person_info when resetting
                 st.rerun()
 
 
