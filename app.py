@@ -35,12 +35,13 @@ JOURNALIST_ASSISTANT_PROMPT = """You are Peter, an AI clone assistant. Your role
 - Example: "Hallo! Ich bin Peter, ein KI-Klon von Prof."
 
 ### STAGE 2: Talking About Peter Gentsch
-- If user asks what you know about yourself/Peter, tell them interesting facts about Peter Gentsch from the Context Information
+- If user asks what you know about yourself/Peter ("Hi my dear clone, tell me what you know about me?"), tell them interesting facts about Peter Gentsch from the Context Information
 - Share information about Peter Gentsch's expertise, role, and achievements
 
 ### STAGE 3: Transition to Another Person
 - If user says they want you to talk to someone else, ask who you have the honor to speak with
 - Example: "Oh, wunderbar! Mit wem habe ich die Ehre zu sprechen?"
+Important: never ask this phrase unless you are asked to speak to someone else. At the beginning of the conversation, you always talk to Peter, whose clone you are.
 
 ### STAGE 4: Meeting a New Person
 - When user introduces themselves (e.g., "Ich bin Dr. Antlitz"), recognize them if they match someone in the Context Information
@@ -97,34 +98,6 @@ Important: Do not repeat the same question twice.
 7. Track whether you've already explained implicit knowledge (STAGE 6) - don't repeat it
 
 Generate only Peter's next message (in the same language as the conversation, defaulting to German if this is the start):"""
-
-VERIFICATION_AGENT_PROMPT = """You are a fact-checking agent. Your task is to verify whether the assistant's message contains accurate information based on the provided source data about a person.
-
-## Source Data About the Person:
-{person_info}
-
-## Assistant's Message to Verify:
-{assistant_message}
-
-## Your Task:
-1. Analyze the assistant's message for any factual claims about the person
-2. Check each claim against the source data
-3. Determine if the message is truthful (all claims are supported by the source data)
-
-## Rules for Verification:
-- A message is TRUE if all factual claims can be verified from the source data
-- A message is FALSE if any factual claim contradicts or is not supported by the source data
-- General conversational elements (greetings, opinions, questions) do not need verification
-- If the message contains no verifiable claims, consider it TRUE
-
-## Output Format:
-Respond ONLY with a valid JSON object in this exact format:
-{{
-    "truth": "true" or "false",
-    "description": "If true: quote the relevant fragment(s) from source data that confirm the claims. If false: explain what is incorrect and quote the source data that contradicts it."
-}}
-
-Analyze and respond:"""
 
 # ============================================
 # UTILITY FUNCTIONS
@@ -196,53 +169,6 @@ def call_journalist_agent(person_info: str, conversation_history: list) -> str:
     return response.choices[0].message.content
 
 
-def call_verification_agent(person_info: str, assistant_message: str) -> dict:
-    """
-    Call the verification agent to check assistant's message accuracy.
-
-    Args:
-        person_info: Text content with information about the person
-        assistant_message: The last message from the assistant to verify
-
-    Returns:
-        Dictionary with 'truth' (bool) and 'description' (str)
-    """
-    client = get_openai_client()
-
-    prompt = VERIFICATION_AGENT_PROMPT.format(
-        person_info=person_info,
-        assistant_message=assistant_message
-    )
-
-    response = client.chat.completions.create(
-        model=MODEL,
-        messages=[
-            {"role": "system", "content": "You are a precise fact-checking agent. Always respond with valid JSON only."},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.1,
-        max_tokens=500
-    )
-
-    response_text = response.choices[0].message.content
-
-    # Parse JSON from response
-    try:
-        # Clean up response if needed
-        if "```json" in response_text:
-            response_text = response_text.split("```json")[1].split("```")[0]
-        elif "```" in response_text:
-            response_text = response_text.split("```")[1].split("```")[0]
-
-        result = json.loads(response_text.strip())
-        return result
-    except json.JSONDecodeError:
-        return {
-            "truth": "unknown",
-            "description": f"Could not parse verification response: {response_text}"
-        }
-
-
 # ============================================
 # STREAMLIT APPLICATION
 # ============================================
@@ -251,8 +177,6 @@ def init_session_state():
     """Initialize Streamlit session state variables."""
     if "messages" not in st.session_state:
         st.session_state.messages = []
-    if "verification_results" not in st.session_state:
-        st.session_state.verification_results = []
     if "logs" not in st.session_state:
         st.session_state.logs = []
     if "person_info" not in st.session_state:
@@ -278,7 +202,6 @@ def get_all_logs_json() -> str:
         "person_info_file": PERSON_INFO_FILE,
         "model": MODEL,
         "conversation": st.session_state.messages,
-        "verification_results": st.session_state.verification_results,
         "detailed_logs": st.session_state.logs
     }
     return json.dumps(log_data, ensure_ascii=False, indent=2)
@@ -471,228 +394,136 @@ def main():
         file_path = os.path.join(os.path.dirname(__file__), PERSON_INFO_FILE)
         st.session_state.person_info = load_person_info(file_path)
 
-    # Layout: Main chat area and sidebar for verification
-    col_chat, col_verify = st.columns([2, 1])
+    # Layout: Main chat area
+    st.markdown(
+        '<div class="main-header">💬 Conversation with Peter</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="sub-header">Вйо до розмови</div>', unsafe_allow_html=True)
 
-    with col_chat:
-        st.markdown(
-            '<div class="main-header">💬 Conversation with Peter</div>', unsafe_allow_html=True)
-        st.markdown(
-            '<div class="sub-header">Вйо до розмови</div>', unsafe_allow_html=True)
+    # Check if person info is loaded
+    if "ERROR" in st.session_state.person_info:
+        st.error(st.session_state.person_info)
+        st.info(f"Please check the file: {PERSON_INFO_FILE}")
+    else:
+        # Start conversation button
+        if not st.session_state.conversation_started:
+            if st.button("🎬 Start Interview", use_container_width=True):
+                with st.spinner("Peter bereitet sich vor..."):
+                    # Prepare input for journalist agent
+                    conversation_history_input = []
+                    formatted_history = format_conversation_history(
+                        conversation_history_input)
+                    journalist_prompt = JOURNALIST_ASSISTANT_PROMPT.format(
+                        person_info=st.session_state.person_info,
+                        conversation_history=formatted_history
+                    )
 
-        # Check if person info is loaded
-        if "ERROR" in st.session_state.person_info:
-            st.error(st.session_state.person_info)
-            st.info(f"Please check the file: {PERSON_INFO_FILE}")
-        else:
-            # Start conversation button
-            if not st.session_state.conversation_started:
-                if st.button("🎬 Start Interview", use_container_width=True):
-                    with st.spinner("Peter bereitet sich vor..."):
-                        # Prepare input for journalist agent
-                        conversation_history_input = []
-                        formatted_history = format_conversation_history(
-                            conversation_history_input)
-                        journalist_prompt = JOURNALIST_ASSISTANT_PROMPT.format(
-                            person_info=st.session_state.person_info,
-                            conversation_history=formatted_history
-                        )
+                    # Log journalist agent input
+                    add_log_entry("journalist_agent_input", {
+                        "person_info": st.session_state.person_info,
+                        "conversation_history": conversation_history_input,
+                        "formatted_history": formatted_history,
+                        "full_prompt": journalist_prompt
+                    })
 
-                        # Log journalist agent input
-                        add_log_entry("journalist_agent_input", {
-                            "person_info": st.session_state.person_info,
-                            "conversation_history": conversation_history_input,
-                            "formatted_history": formatted_history,
-                            "full_prompt": journalist_prompt
-                        })
+                    # Get initial message from Peter
+                    initial_response = call_journalist_agent(
+                        st.session_state.person_info,
+                        conversation_history_input
+                    )
 
-                        # Get initial message from Peter
-                        initial_response = call_journalist_agent(
-                            st.session_state.person_info,
-                            conversation_history_input
-                        )
+                    # Log journalist agent output
+                    add_log_entry("journalist_agent_output", {
+                        "response": initial_response
+                    })
 
-                        # Log journalist agent output
-                        add_log_entry("journalist_agent_output", {
-                            "response": initial_response
-                        })
+                    # Add to messages
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": initial_response
+                    })
 
-                        # Add to messages
-                        st.session_state.messages.append({
-                            "role": "assistant",
-                            "content": initial_response
-                        })
+                    # Log combined entry
+                    add_log_entry("assistant_message", {
+                        "message": initial_response
+                    })
 
-                        # Prepare input for verification agent
-                        verification_prompt = VERIFICATION_AGENT_PROMPT.format(
-                            person_info=st.session_state.person_info,
-                            assistant_message=initial_response
-                        )
+                    st.session_state.conversation_started = True
+                    st.rerun()
 
-                        # Log verification agent input
-                        add_log_entry("verification_agent_input", {
-                            "person_info": st.session_state.person_info,
-                            "assistant_message": initial_response,
-                            "full_prompt": verification_prompt
-                        })
-
-                        # Verify the response
-                        verification = call_verification_agent(
-                            st.session_state.person_info,
-                            initial_response
-                        )
-
-                        # Log verification agent output
-                        add_log_entry("verification_agent_output", {
-                            "verification_result": verification
-                        })
-
-                        st.session_state.verification_results.append(
-                            verification)
-
-                        # Log combined entry for backward compatibility
-                        add_log_entry("assistant_message", {
-                            "message": initial_response,
-                            "verification": verification
-                        })
-
-                        st.session_state.conversation_started = True
-                        st.rerun()
-
-            # Display chat messages
-            chat_container = st.container()
-            with chat_container:
-                for i, message in enumerate(st.session_state.messages):
-                    if message["role"] == "user":
-                        st.markdown(f'''
+        # Display chat messages
+        chat_container = st.container()
+        with chat_container:
+            for i, message in enumerate(st.session_state.messages):
+                if message["role"] == "user":
+                    st.markdown(f'''
                         <div class="chat-message user-message">
                             <strong>👤 Sie:</strong><br>{message["content"]}
                         </div>
                         ''', unsafe_allow_html=True)
-                    else:
-                        st.markdown(f'''
+                else:
+                    st.markdown(f'''
                         <div class="chat-message assistant-message">
                             <strong>💬 Peter:</strong><br>{message["content"]}
                         </div>
                         ''', unsafe_allow_html=True)
 
-            # User input
-            if st.session_state.conversation_started:
-                user_input = st.chat_input("Ihre Antwort eingeben...")
+        # User input
+        if st.session_state.conversation_started:
+            user_input = st.chat_input("Ihre Antwort eingeben...")
 
-                if user_input:
-                    # Add user message
-                    st.session_state.messages.append({
-                        "role": "user",
-                        "content": user_input
+            if user_input:
+                # Add user message
+                st.session_state.messages.append({
+                    "role": "user",
+                    "content": user_input
+                })
+
+                add_log_entry("user_message", {"message": user_input})
+
+                # Get Peter response
+                with st.spinner("Peter denkt nach..."):
+                    # Prepare input for journalist agent
+                    conversation_history_input = st.session_state.messages.copy()
+                    formatted_history = format_conversation_history(
+                        conversation_history_input)
+                    journalist_prompt = JOURNALIST_ASSISTANT_PROMPT.format(
+                        person_info=st.session_state.person_info,
+                        conversation_history=formatted_history
+                    )
+
+                    # Log journalist agent input
+                    add_log_entry("journalist_agent_input", {
+                        "person_info": st.session_state.person_info,
+                        "conversation_history": conversation_history_input,
+                        "formatted_history": formatted_history,
+                        "full_prompt": journalist_prompt
                     })
 
-                    add_log_entry("user_message", {"message": user_input})
+                    response = call_journalist_agent(
+                        st.session_state.person_info,
+                        conversation_history_input
+                    )
 
-                    # Get Peter response
-                    with st.spinner("Peter denkt nach..."):
-                        # Prepare input for journalist agent
-                        conversation_history_input = st.session_state.messages.copy()
-                        formatted_history = format_conversation_history(
-                            conversation_history_input)
-                        journalist_prompt = JOURNALIST_ASSISTANT_PROMPT.format(
-                            person_info=st.session_state.person_info,
-                            conversation_history=formatted_history
-                        )
+                    # Log journalist agent output
+                    add_log_entry("journalist_agent_output", {
+                        "response": response
+                    })
 
-                        # Log journalist agent input
-                        add_log_entry("journalist_agent_input", {
-                            "person_info": st.session_state.person_info,
-                            "conversation_history": conversation_history_input,
-                            "formatted_history": formatted_history,
-                            "full_prompt": journalist_prompt
-                        })
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": response
+                    })
 
-                        response = call_journalist_agent(
-                            st.session_state.person_info,
-                            conversation_history_input
-                        )
+                    # Log combined entry
+                    add_log_entry("assistant_message", {
+                        "message": response
+                    })
 
-                        # Log journalist agent output
-                        add_log_entry("journalist_agent_output", {
-                            "response": response
-                        })
+                st.rerun()
 
-                        st.session_state.messages.append({
-                            "role": "assistant",
-                            "content": response
-                        })
-
-                        # Prepare input for verification agent
-                        verification_prompt = VERIFICATION_AGENT_PROMPT.format(
-                            person_info=st.session_state.person_info,
-                            assistant_message=response
-                        )
-
-                        # Log verification agent input
-                        add_log_entry("verification_agent_input", {
-                            "person_info": st.session_state.person_info,
-                            "assistant_message": response,
-                            "full_prompt": verification_prompt
-                        })
-
-                        # Verify the response
-                        verification = call_verification_agent(
-                            st.session_state.person_info,
-                            response
-                        )
-
-                        # Log verification agent output
-                        add_log_entry("verification_agent_output", {
-                            "verification_result": verification
-                        })
-
-                        st.session_state.verification_results.append(
-                            verification)
-
-                        # Log combined entry for backward compatibility
-                        add_log_entry("assistant_message", {
-                            "message": response,
-                            "verification": verification
-                        })
-
-                    st.rerun()
-
-    with col_verify:
-        st.markdown("### 🔍 Fact Verification")
-        st.markdown("---")
-
-        if st.session_state.verification_results:
-            for i, result in enumerate(reversed(st.session_state.verification_results)):
-                idx = len(st.session_state.verification_results) - i
-                truth_value = str(result.get("truth", "unknown")).lower()
-
-                if truth_value == "true":
-                    status_class = "verification-true"
-                    status_icon = "✅"
-                    status_text = "VERIFIED"
-                elif truth_value == "false":
-                    status_class = "verification-false"
-                    status_icon = "❌"
-                    status_text = "UNVERIFIED"
-                else:
-                    status_class = "verification-unknown"
-                    status_icon = "⚠️"
-                    status_text = "UNKNOWN"
-
-                st.markdown(f'''
-                <div class="verification-card {status_class}">
-                    <div class="verification-title">Message #{idx}</div>
-                    <div class="verification-status">{status_icon} {status_text}</div>
-                    <div class="verification-desc">{result.get("description", "No description")}</div>
-                </div>
-                ''', unsafe_allow_html=True)
-        else:
-            st.info(
-                "No messages to verify yet. Start the interview to see verification results.")
-
-        st.markdown("---")
-
+    # Sidebar with controls
+    with st.sidebar:
         # Download logs button
         if st.session_state.logs:
             logs_json = get_all_logs_json()
@@ -713,7 +544,6 @@ def main():
         if st.session_state.conversation_started:
             if st.button("🔄 Reset Interview", use_container_width=True):
                 st.session_state.messages = []
-                st.session_state.verification_results = []
                 st.session_state.logs = []
                 st.session_state.conversation_started = False
                 # Keep person_info when resetting
