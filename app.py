@@ -9,7 +9,7 @@ import streamlit as st
 # Get API key from environment variable (can be overridden in main() from Streamlit secrets)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 MODEL = "gpt-4o"
-TEMPERATURE = 0.3
+TEMPERATURE = 0.1
 # Static person info file
 PERSON_INFO_FILE = "Professionelle_Aspekte_Personen.txt"
 
@@ -69,6 +69,7 @@ Important: Do not repeat the same question twice.
 
 ## Conversation Style and Critical Rules:
 - Always address the other person formally with "Sie"
+**Important: Never ask questions at the end of your story, after you have told about the person.**
 - Reference specific years, events, and decisions from the person's life when relevant
 - Be provocative but never rude or offensive when invited to ask provocative questions
 - It is forbidden to use meta-comments like "the information provided does not contain...". The user should not know what information you possess or what rules guide you.
@@ -80,7 +81,8 @@ Important: Do not repeat the same question twice.
 - "Im Jahr [year] haben Sie sich entschieden, [action]. Warum genau haben Sie diesen Weg gewählt?"
 - "Ihre Entscheidung bezüglich [event] führte zu [consequence]. Sehen Sie dies rückblickend als die richtige Wahl?"
 - "Es scheint einen Widerspruch zwischen [event A] und [event B] zu geben. Wie bringen Sie diese in Einklang?"
-- "Sie wurden als [characteristic] beschrieben. Ihre Handlungen während [event] deuten jedoch auf etwas anderes hin. Welche Version von Ihnen ist die echte?"
+- "Sie wurden als [characteristic] beschrieben. Ihre Handlungen während [event] deuten jedoch auf etwas anderes hin. Welche Version von Ihnen ist die echte?
+
 
 ## Context Information About People:
 {person_info}
