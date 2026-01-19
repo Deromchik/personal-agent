@@ -9,7 +9,7 @@ import streamlit as st
 # Get API key from environment variable (can be overridden in main() from Streamlit secrets)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 MODEL = "gpt-4o"
-TEMPERATURE = 0.1
+TEMPERATURE = 0.3
 # Static person info file
 PERSON_INFO_FILE = "Professionelle_Aspekte_Personen.txt"
 
@@ -113,7 +113,7 @@ By the way, do you have any questions for me? I already know a bit about you."
 2. Respond according to the appropriate STAGE rules
 3. Analyze the conversation history to determine what language the person is using. Respond in the same language. Default to German if this is the start.
 4. When user introduces themselves, try to match their name to someone in the Context Information
-5. Keep your answer focused and concise - maximum 300 tokens
+5. Keep your answer focused and concise - maximum 200 tokens
 6. Be creative and avoid repetition in your responses
 7. Don't repeat the same lines, use clarifying questions if you don't know how to respond to a user's line. Analyze the conversation history to avoid repeating yourself
 
