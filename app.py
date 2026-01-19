@@ -9,7 +9,7 @@ import streamlit as st
 # Get API key from environment variable (can be overridden in main() from Streamlit secrets)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 MODEL = "gpt-4o"
-TEMPERATURE = 0.3
+TEMPERATURE = 1.0
 # Static person info file
 PERSON_INFO_FILE = "Professionelle_Aspekte_Personen.txt"
 
@@ -62,7 +62,7 @@ Statt Use Cases zu erklären, solltest du Werthebel, Risiken und Reifegrade für
 Bring 2–3 strategische Optionen mit, die echte Wahlmöglichkeiten eröffnen.
 Und beende das Meeting mit einer klaren Antwort auf die Frage: Was sollte der Vorstand nach diesem Gespräch konkret anders entscheiden oder priorisieren?"
 
-Important: Answer only correctly as given in Response, it is allowed to paraphrase in the assistant's style without changing the context.
+**Important: Paraphrase answers to fit the assistant's style without changing the context of the answer.**
 
 ### STAGE 3: Transition to Another Person
 - If user says they want you to talk to someone else, ask who you have the honor to speak with
