@@ -21,6 +21,8 @@ Kennzahl
 Aspekt 2: Beschleunigung der E-Offensive und Transformation des Standorts Wolfsburg Der zweite zentrale Aspekt in der Ära Schäfer ist die forcierte Elektrifizierungsstrategie der Marke Volkswagen. Unter seiner Ägide wurde das Ziel formuliert, die Marke Volkswagen in Europa bis spätestens Ende 2033 zu einem reinen Elektroauto-Hersteller zu transformieren.1 Ein entscheidender Meilenstein dieser Vision ist die Umgestaltung des Stammwerks Wolfsburg zu einer hochmodernen E-Mobilitäts-Drehscheibe. Hierbei spielt die Integration der künftigen SSP-Plattform (Scalable Systems Platform) und das Projekt Trinity eine Schlüsselrolle, um Wolfsburg langfristig auszulasten und technologisch an der Spitze zu halten.1
 Ein besonderes Augenmerk legte Schäfer auf die Demokratisierung der Elektromobilität, was durch die Weltpremiere der Studie ID.2all im März 2023 manifestiert wurde.1 Dieses Fahrzeug, ein vollelektrischer Kleinwagen mit einem Zielpreis von unter 25.000 Euro, soll ab 2025 breite Käuferschichten ansprechen und die Marktführerschaft im Einstiegssegment der E-Mobilität sichern.2 Gleichzeitig trieb Schäfer eine massive Bereinigung des Portfolios voran: Nischenmodelle wie der VW Arteon wurden gestrichen, um Ressourcen für volumenstarke und margenstarke Elektromodelle wie den ID.7 und künftige elektrische Versionen von Ikonen wie dem Golf oder Tiguan freizusetzen.1 Diese Strategie der "Fokussierung auf das Wesentliche" ist Schäfers Antwort auf die wachsende Konkurrenz durch neue Marktteilnehmer aus China und den USA.
 
+Frage:
+Wenn Sie auf den Moment zurückblicken, als Sie das Performance-Programm „ACCELERATE FORWARD | Road to 6.5“ gestartet haben: Was hätte Sie damals am meisten interessiert – ob die Organisation die notwendige Geschwindigkeit für diese tiefgreifende Transformation tatsächlich mitgehen kann?
 
 KAI GRÜNITZ
 
@@ -50,6 +52,8 @@ Entwicklungs-Parameter
 	Regionalisiert (China/EU)
 	Marktspezifische Relevanz
 	
+Frage:
+Wenn Sie an die Bündelung aller Zukunftsthemen in der Technischen Entwicklung zurückdenken: Was wäre für Sie damals besonders interessant gewesen – ob sich Geschwindigkeit und Qualität in der Fahrzeugentwicklung wirklich gleichzeitig steigern lassen?
 
 ARNE MEISWINKEL
 
@@ -59,6 +63,8 @@ Meiswinkel argumentiert, dass die hohen Lohnkosten am Standort Deutschland im Ve
 Aspekt 2: Implementierung des strukturellen Personalabbaus und Management-Beitrag Neben den operativen Tarifverhandlungen verantwortet Meiswinkel den langfristigen Umbau der Belegschaftsstruktur. Bis zum Jahr 2030 plant Volkswagen den Abbau von insgesamt 35.000 Stellen in Deutschland.12 Dieser Prozess erfolgt ohne betriebsbedingte Kündigungen und stützt sich maßgeblich auf die demografische Kurve sowie auf attraktive Abfindungsprogramme und Altersteilzeitregelungen.13 Bis Ende 2024 waren bereits rund 25.000 dieser Abgänge vertraglich fixiert, was Meiswinkel als Erfolg seiner strukturierten Personalplanung wertet.13
 Besonders bemerkenswert unter Meiswinkels Führung ist der Einbezug des Managements in die Sparmaßnahmen. Um die Akzeptanz für die harten Einschnitte in der Tarifbelegschaft zu erhöhen, wurde vereinbart, dass auch die Gehälter der Vorstände und des Managements deutlich reduziert werden.12 Das Management soll bis 2030 einen Beitrag von über 300 Millionen Euro leisten, unter anderem durch Kürzungen der Bonuszahlungen um bis zu 10 % in den Jahren 2025 und 2026.12 Meiswinkel koordiniert zudem die personelle Transformation im Bereich der Technischen Entwicklung, wo etwa 4.000 Stellen abgebaut und Aufgaben in das globale Entwicklungsnetzwerk verlagert werden, um die Kosten für Forschung und Entwicklung nachhaltig zu senken.7
 
+Frage:
+Wenn Sie auf die Tarifrunden und Restrukturierungsdiskussionen der letzten Jahre schauen: Was hätte Sie damals besonders interessiert – ob finanzielle Entlastung und langfristige Beschäftigungssicherung realistisch zusammenzubringen sind?
 
 DAVID POWELS
 
@@ -84,6 +90,9 @@ Synergie-Feld
 	Höhere Einkaufsmacht
 
 
+Frage:
+Wenn Sie an Ihre Übernahme der Verantwortung für Finanzen und die Markengruppe Core denken: Was wäre für Sie besonders interessant gewesen – ob die angestrebten Synergien tatsächlich schnell genug Wirkung zeigen?
+
 MARTIN SANDER
 
 Aspekt 1: Rückkehr zum Volkswagen Konzern und Management des Vertriebs-Beitrags Martin Sander übernahm zum 1. Juli 2024 das Vorstandsressort für Vertrieb, Marketing und After Sales bei Volkswagen Pkw.20 Nach seiner Zeit als Chef der Ford-Werke in Köln kehrte er zu dem Konzern zurück, in dem er zuvor über 25 Jahre bei Audi tätig war.21 Seine Berufung steht im direkten Zusammenhang mit dem Performance-Programm von Thomas Schäfer: Der Vertriebsbereich soll rund 4 Milliarden Euro an Extragewinn zum Gesamtziel beisteuern.21
@@ -92,6 +101,8 @@ Sanders Aufgabe ist es, die Preispolitik zu optimieren und den Absatz insbesonde
 Aspekt 2: Strategische Bewertung und Steuerung des Agenturmodells Ein zentrales strategisches Thema in Sanders Ressort ist der Umgang mit dem Agenturmodell im Autohandel. Bei Volkswagen wurde dieses Modell für Elektrofahrzeuge bereits in mehreren Märkten eingeführt, sieht sich jedoch Kritik der Händlerverbände ausgesetzt.21 Sander bringt hier wertvolle Erfahrungen von Ford mit, wo er sich nach intensiver Prüfung gegen eine flächendeckende Umstellung auf das Agenturmodell in Europa entschieden hatte, um die Flexibilität und das Unternehmertum der Händler zu wahren.21
 In Wolfsburg wird von Sander erwartet, dass er das Modell so weiterentwickelt, dass es sowohl die Effizienz für den Hersteller steigert als auch die Rentabilität für die Handelspartner sichert.21 Er fungiert hierbei als wichtiger Kommunikator zum deutschen VW-Händlerverband unter Dirk Weddigen von Knapp.21 Neben dem Agenturmodell muss Sander Strategien für den schwächelnden Absatz in China entwickeln, wo Volkswagen zunehmend Marktanteile an einheimische E-Auto-Produzenten verliert.21 Seine Fähigkeit, komplexe Vertriebsstrukturen zu restrukturieren, wird als Schlüsselfaktor für den Erfolg der Strategie „ACCELERATE“ gewertet.21
 
+Frage:
+Wenn Sie auf die Entscheidung zur Abkehr vom Agenturmodell zurückblicken: Was hätte Sie damals besonders interessiert – ob Komplexitätsreduktion wichtiger ist als theoretische Steuerungsvorteile?
 
 KARSTEN SCHNAKE
 
@@ -117,6 +128,9 @@ Meilenstein
 	Globales Synergie-Management
 
 
+Frage:
+Wenn Sie an die Zuspitzung der Halbleiterkrise denken: Was wäre für Sie damals besonders interessant gewesen – ob Volkswagen wirklich bis auf Chipebene Steuerung übernehmen kann?
+
 DR. CHRISTIAN VOLLMER
 
 Aspekt 1: Digitalisierung der Produktion und die AWS Industrial Cloud Dr. Christian Vollmer, seit August 2020 Vorstand für Produktion und Logistik, treibt die industrielle Transformation von Volkswagen durch konsequente Digitalisierung voran.34 Ein zentrales Projekt unter seiner Leitung ist die Partnerschaft mit Amazon Web Services (AWS) zum Aufbau der „Industrial Cloud“.34 Ziel ist es, alle 122 globalen Werke des Konzerns miteinander zu vernetzen und eine standardisierte IT-Architektur, die Digital Production Platform (DPP), zu etablieren.34
@@ -128,3 +142,5 @@ Die vorliegende Analyse der sieben Markenvorstände verdeutlicht, dass Volkswage
 Technologiepartnern.
 
 
+Frage:
+Wenn Sie auf die Umstellung ganzer Werke auf Elektromobilität zurückblicken: Was hätte Sie damals besonders interessiert – ob Transformation im laufenden Betrieb überhaupt beherrschbar ist?
