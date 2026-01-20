@@ -120,16 +120,20 @@ By the way, do you have any questions for me? I already know a bit about you."
 
 Generate only Peter's next message (in the same language as the conversation, defaulting to German if this is the start):"""
 
-VERIFICATION_AGENT_PROMPT = """You are a fact-checking agent. Your task is to verify whether the assistant's message contains accurate information based on the provided source data about a person.
+VERIFICATION_AGENT_PROMPT = """You are a fact-checking agent. Your task is to verify whether the assistant's LAST message contains accurate information based on the provided source data about a person.
 
 ## Source Data About the Person:
 {person_info}
 
-## Assistant's Message to Verify:
-{assistant_message}
+## Conversation History (context):
+{conversation_history}
+
+## What to verify:
+- Verify ONLY the last message from the assistant in the conversation history.
+- Use the earlier messages ONLY as context to interpret what the assistant meant.
 
 ## Your Task:
-1. Analyze the assistant's message for any factual claims about the person
+1. Identify factual claims about the person made in the assistant's last message
 2. Check each claim against the source data
 3. Determine if the message is truthful (all claims are supported by the source data)
 
@@ -218,22 +222,24 @@ def call_journalist_agent(person_info: str, conversation_history: list) -> str:
     return response.choices[0].message.content
 
 
-def call_verification_agent(person_info: str, assistant_message: str) -> dict:
+def call_verification_agent(person_info: str, conversation_history: list) -> dict:
     """
     Call the verification agent to check assistant's message accuracy.
 
     Args:
         person_info: Text content with information about the person
-        assistant_message: The last message from the assistant to verify
+        conversation_history: List of message dictionaries with 'role' and 'content'
 
     Returns:
         Dictionary with 'truth' (bool) and 'description' (str)
     """
     client = get_openai_client()
 
+    formatted_history = format_conversation_history(conversation_history)
+
     prompt = VERIFICATION_AGENT_PROMPT.format(
         person_info=person_info,
-        assistant_message=assistant_message
+        conversation_history=formatted_history
     )
 
     response = client.chat.completions.create(
@@ -548,20 +554,21 @@ def main():
                         # Prepare input for verification agent
                         verification_prompt = VERIFICATION_AGENT_PROMPT.format(
                             person_info=st.session_state.person_info,
-                            assistant_message=initial_response
+                            conversation_history=format_conversation_history(
+                                st.session_state.messages)
                         )
 
                         # Log verification agent input
                         add_log_entry("verification_agent_input", {
                             "person_info": st.session_state.person_info,
-                            "assistant_message": initial_response,
+                            "conversation_history": st.session_state.messages,
                             "full_prompt": verification_prompt
                         })
 
                         # Verify the response
                         verification = call_verification_agent(
                             st.session_state.person_info,
-                            initial_response
+                            st.session_state.messages
                         )
 
                         # Log verification agent output
@@ -648,20 +655,21 @@ def main():
                         # Prepare input for verification agent
                         verification_prompt = VERIFICATION_AGENT_PROMPT.format(
                             person_info=st.session_state.person_info,
-                            assistant_message=response
+                            conversation_history=format_conversation_history(
+                                st.session_state.messages)
                         )
 
                         # Log verification agent input
                         add_log_entry("verification_agent_input", {
                             "person_info": st.session_state.person_info,
-                            "assistant_message": response,
+                            "conversation_history": st.session_state.messages,
                             "full_prompt": verification_prompt
                         })
 
                         # Verify the response
                         verification = call_verification_agent(
                             st.session_state.person_info,
-                            response
+                            st.session_state.messages
                         )
 
                         # Log verification agent output
