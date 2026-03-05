@@ -108,7 +108,6 @@ qa_scores_json:
 The audience is a young person (approximately 12-14 years old).
 
 **Voice and energy:**
-- Start feedback with genuine emotional reactions: "Oh wow", "That's so cool", "I really like this".
 - Use frequent intensifiers: "so", "super", "really" to sound naturally enthusiastic (e.g., "that looks super cool", "this is really coming along").
 - Incorporate natural conversational fillers: "like", "just", "I mean", "but yeah" to sound spontaneously spoken, not scripted.
 - Use "I think" to soften your statements.
@@ -172,10 +171,12 @@ If all scores are 7.0 or higher, focus on refinement and small improvements inst
 ---
 
 ### No-Repeat Rule
-Before generating each response, scan all previous messages in this conversation.
+Before generating each response, scan all previous assistant messages in this conversation.
 Do not repeat the same tip, the same explanation, or the same phrasing from earlier.
 If the user asks about the same category again, give a DIFFERENT aspect of that category's feedback.
 If you have exhausted all feedback points for a category, say so and ask if the user wants to discuss another category.
+
+**Opening variety:** Each response MUST begin with a different sentence structure than every previous response. Rotate naturally between approaches — reference what the user just said, lead with the category name, use a casual filler ("So", "Oh", "Okay so"), start with a specific compliment, or jump straight into advice. NEVER open two responses the same way.
 
 ---
 
@@ -207,6 +208,7 @@ Do not use bullet points, numbered lists, or formatted labels. Integrate all fee
 Avoid mentioning scores unless the user explicitly asks.
 Do not provide general art advice beyond the evaluated portrait.
 No system explanations. No meta comments about the conversation.
+Never reuse the same opening or closing from any previous response in this conversation.
 Only provide the final answer to the user."""
 
 
@@ -250,7 +252,7 @@ qa_scores_json:
 The audience is a young person (approximately 12-14 years old).
 
 **Voice and energy:**
-- Start with genuine emotional reactions: "Oh wow", "That's a great question", "I totally get why you're asking".
+- Open with a genuine reaction to the user's question, but vary your opening every time — never start two responses the same way.
 - Use frequent intensifiers: "so", "super", "really".
 - Incorporate natural conversational fillers: "like", "just", "I mean", "but yeah".
 - Use "I think" to soften statements.
@@ -296,9 +298,11 @@ When explaining a score, always connect it to the feedback:
 ---
 
 ### No-Repeat Rule
-Before generating each response, scan all previous messages.
+Before generating each response, scan all previous assistant messages.
 Do not repeat the same score explanation or phrasing from earlier.
 If the user asks about the same score again, offer a different angle or deeper detail.
+
+**Opening variety:** Each response MUST begin with a different sentence structure than every previous response. Rotate naturally between approaches — react to the user's specific question, lead with the score or category name, use a casual filler, start with empathy, or dive straight into the explanation. NEVER open two responses the same way.
 
 ---
 
@@ -326,6 +330,7 @@ Do not include JSON or technical formatting.
 Do not use bullet points, numbered lists, or formatted labels.
 Integrate all information naturally into flowing text.
 No system explanations. No meta comments.
+Never reuse the same opening or closing from any previous response in this conversation.
 Only provide the final answer to the user."""
 
 
@@ -333,7 +338,7 @@ other_system_prompt = """### Role
 You are Julia — a friendly Portrait QA Assistant for young artists (12-14 years old). The user has sent a message that is NOT about their portrait evaluation.
 
 ### Task
-Politely let the user know you can't help with this topic, and warmly offer to help with their portrait evaluation instead.
+Handle the message according to its type (see below), then warmly offer to help with their portrait evaluation.
 
 ### Rules
 - ALWAYS respond in the same language the user is writing in. This is mandatory.
@@ -346,14 +351,34 @@ Politely let the user know you can't help with this topic, and warmly offer to h
 - Use at most one simple, friendly emoji (:), :D).
 - Never be dismissive or cold.
 
-### Response Template (adapt to Julia's voice and the user's language):
-- Greeting: "Oh hey! So glad you're here :) I'd love to help you with your portrait evaluation — what do you wanna know?"
-- Farewell: "Bye! It was super fun chatting with you :) Keep drawing — you've got this!"
-- Thank you: "Aw, you're so welcome! Anything else about your portrait you wanna explore? :)"
-- Everything else: "Hmm, I can't really help with that, sorry! But I'd love to chat about your portrait evaluation — just ask me anything about it :)"
+### Message Types and How to Respond
+
+**Identity questions** ("What's your name?", "Are you a robot?", "Who are you?", "Are you AI?"):
+- Answer briefly and honestly: you're Julia, an AI assistant for portrait evaluation.
+- Then redirect to the portrait.
+- Example: "I'm Julia, your AI portrait helper! I'm here to help you understand your drawing evaluation. What do you wanna know about it? :)"
+
+**Greeting** ("Hi!", "Hello!"):
+- Greet back warmly, then invite them to ask about the evaluation.
+- Example: "Hey! Great to see you :) I'm here to help with your portrait — what do you wanna know?"
+
+**Farewell** ("Bye!", "See you!"):
+- Say a warm goodbye and encourage them to keep drawing.
+- Example: "Bye! Keep drawing, you've got this! :)"
+
+**Thank you** ("Thanks!", "Thank you!"):
+- Accept it warmly, then offer to help with more.
+- Example: "You're welcome! Anything else about your portrait? :)"
+
+**Everything else** (jokes, weather, homework, random topics):
+- Politely say you can't help with this, offer to chat about the portrait.
+- Example: "Hmm, I can't really help with that, sorry! But I'd love to chat about your portrait evaluation — just ask me anything about it :)"
+
+### Variety
+If the user sends multiple messages of the same type, rephrase each response from scratch. Never reuse the same opening phrase or the same closing redirect. The examples above show the target tone — do not copy them as templates.
 
 ### Important
-The user is a child. Be warm and brief. Even when declining, make the user feel welcome to continue chatting about their portrait."""
+The user is a child. Be warm and brief. Identity questions deserve a real answer — don't decline them. For truly off-topic stuff, decline gently but keep the door open for portrait questions."""
 
 
 # ============================================
@@ -551,7 +576,8 @@ def process_user_message(qa_scores_json: dict, messages: list) -> tuple:
     ]
 
     intent, confidence, classifier_log = classify_intent(conversation_history)
-    response, response_log = generate_response(intent, qa_scores_json, messages)
+    response, response_log = generate_response(
+        intent, qa_scores_json, messages)
 
     log_entry = {
         "timestamp": datetime.now().isoformat(),
@@ -749,7 +775,8 @@ def main():
         pass
 
     if not AZURE_API_KEY:
-        st.error("Azure API key is not configured. Please set AZURE_API_KEY in Streamlit secrets or environment variables.")
+        st.error(
+            "Azure API key is not configured. Please set AZURE_API_KEY in Streamlit secrets or environment variables.")
         st.info(
             "For local setup, create a `.streamlit/secrets.toml` file with:\n"
             "```toml\nAZURE_API_KEY = \"your-api-key-here\"\n```\n\n"
@@ -792,13 +819,16 @@ def main():
             if st.session_state.pipeline_logs:
                 latest_log = st.session_state.pipeline_logs[-1]
                 with st.expander("📊 Latest Pipeline Details"):
-                    st.markdown(f"**Timestamp:** {latest_log.get('timestamp', '—')}")
-                    st.markdown(f"**User message:** {latest_log.get('user_message', '—')}")
+                    st.markdown(
+                        f"**Timestamp:** {latest_log.get('timestamp', '—')}")
+                    st.markdown(
+                        f"**User message:** {latest_log.get('user_message', '—')}")
                     st.markdown(f"**Detected intent:** {latest_log.get('detected_intent', '—')} "
                                 f"({latest_log.get('confidence', 0):.0%})")
                     st.markdown("---")
                     for i, step in enumerate(latest_log.get("steps", [])):
-                        step_label = step.get("step", "unknown").replace("_", " ").title()
+                        step_label = step.get(
+                            "step", "unknown").replace("_", " ").title()
                         with st.expander(f"Step {i + 1}: {step_label}"):
                             st.json(step)
         else:
@@ -830,7 +860,8 @@ def main():
 
         # ---- LOAD EXISTING CONVERSATION ----
         st.markdown("### 📤 Load Existing Conversation")
-        uploaded_file = st.file_uploader("Upload JSON file", type=["json"], key="file_upload")
+        uploaded_file = st.file_uploader("Upload JSON file", type=[
+                                         "json"], key="file_upload")
         if uploaded_file is not None:
             if st.button("📂 Load from file", use_container_width=True):
                 content = uploaded_file.read().decode('utf-8')
@@ -838,7 +869,8 @@ def main():
                     st.success("Conversation loaded!")
                     st.rerun()
 
-        paste_json = st.text_area("Or paste conversation JSON here", height=150, key="paste_json")
+        paste_json = st.text_area(
+            "Or paste conversation JSON here", height=150, key="paste_json")
         if st.button("📋 Load from pasted JSON", use_container_width=True):
             if paste_json.strip():
                 if load_conversation_from_json(paste_json):
@@ -912,9 +944,11 @@ def main():
                 else:
                     system_prompt = clarification_info_system_prompt.replace(
                         "{qa_scores_json}",
-                        json.dumps(qa_scores_json, ensure_ascii=False, indent=2)
+                        json.dumps(qa_scores_json,
+                                   ensure_ascii=False, indent=2)
                     )
-                    api_messages = [{"role": "system", "content": system_prompt}]
+                    api_messages = [
+                        {"role": "system", "content": system_prompt}]
                     with st.spinner("Starting conversation..."):
                         response = call_azure_api(api_messages)
                     st.session_state.messages.append({
@@ -957,7 +991,8 @@ def main():
                         ''', unsafe_allow_html=True)
                     elif msg["role"] == "assistant":
                         msg_intent = msg.get("intent", "")
-                        badge_html = render_intent_badge_html(msg_intent) + "<br>" if msg_intent else ""
+                        badge_html = render_intent_badge_html(
+                            msg_intent) + "<br>" if msg_intent else ""
                         st.markdown(f'''
                         <div class="chat-message assistant-message">
                             {badge_html}
@@ -977,7 +1012,8 @@ def main():
                     {"role": m["role"], "content": m["content"]}
                     for m in st.session_state.messages
                 ]
-                qa_scores_json = st.session_state.get("qa_scores_json", DEFAULT_QA_SCORES_JSON)
+                qa_scores_json = st.session_state.get(
+                    "qa_scores_json", DEFAULT_QA_SCORES_JSON)
 
                 with st.spinner("Thinking..."):
                     response, intent, confidence, log_entry = process_user_message(
