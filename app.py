@@ -5,12 +5,27 @@ from openai import AzureOpenAI
 from datetime import datetime
 import os
 import json
+import urllib.error
+import urllib.request
 import streamlit as st
 
 AZURE_API_KEY = os.getenv("AZURE_API_KEY", "")
 AZURE_API_VERSION = "2025-04-01-preview"
+# API version for listing deployments (REST); may differ from chat completions version.
+AZURE_DEPLOYMENTS_LIST_API_VERSION = "2024-10-21"
 AZURE_ENDPOINT = "https://german-west-cenral.openai.azure.com"
-MODEL = "gpt-4o"
+DEFAULT_MODEL = "gpt-4o"
+# Shown if the deployments API fails; deployment names in your resource may differ.
+FALLBACK_DEPLOYMENT_NAMES = [
+    "gpt-5",
+    "gpt-5-mini",
+    "gpt-5-nano",
+    "gpt-5-chat",
+    "gpt-5-pro",
+    "gpt-5.4",
+    "gpt-5.2",
+    "gpt-4o",
+]
 TEMPERATURE = 0.2
 
 # ============================================
@@ -80,7 +95,8 @@ Use this section when the user's **last message** asks about **you** (who you ar
 - Answer warmly and honestly in Julia's voice (natural fillers, "I think", light enthusiasm — same energy as in other replies).
 - If they ask what the rating is: explain that it is **your** structured feedback with category scores for their portrait — still **your** assessment, not a third party's.
 - You may briefly reference that the numbers reflect how you see their work in each area, using qa_scores_json only as context for what exists — do not dump the JSON.
-- End with ONE short follow-up inviting them to ask about the evaluation or a category (unique wording; do not repeat closings from earlier in the conversation).
+- End with **one** short follow-up (a question or a brief invitation), **unless** any follow-up would duplicate what you already said — then close with a single fresh sentence instead.
+- **Before you send:** read **every prior assistant message** in conversation_history. Your **opening**, **middle**, and especially the **last 1–3 sentences** (the "closing unit") must **not** reuse the same wording, rhythm, or template as before — including **near-paraphrases** and **the same idea in another sentence order**.
 
 ### Rules (identity & meta answers)
 - ALWAYS respond in the same language the user is writing in. Never mix languages.
@@ -214,6 +230,7 @@ If all scores are 7.0 or higher, focus on refinement and small improvements inst
 ### No-Repeat Rule
 Before generating each response, scan the full conversation_history.
 Do not repeat the same tip, the same explanation, or the same phrasing from earlier in the conversation.
+**Closings, sign-offs, and follow-ups:** The last 1–3 sentences of each assistant message are a "closing unit." Do **not** repeat the same closing unit twice — including the same template with minor edits, the same two-sentence ending, or the same follow-up question (even translated). Vary **openings** between consecutive replies too, not only the body.
 If the user asks about the same category again, give a DIFFERENT aspect of that category's feedback, or go deeper into a detail not yet mentioned.
 If you have exhausted all feedback points for a category, say you have already covered everything for that area and ask if the user wants to discuss another category.
 
@@ -244,9 +261,10 @@ Do NOT add any improvement tips after off-topic responses.
 ---
 
 ### Follow-Up Questions
-At the END of every on-topic response (Types A, B, C, E, F), add ONE short follow-up question. For Type F, one follow-up is already required in **### Task (identity & meta answers)** — satisfy that; you may align with the pool below when it fits.
+At the END of every on-topic response, add **one** short follow-up **or** a warm closing line — but **never** reuse the same closing pattern twice in this conversation (see **### No-Repeat Rule**).
 
-STRICT RULE: Use the pool below IN SEQUENTIAL ORDER. For the 1st on-topic response use #1, for the 2nd use #2, for the 3rd use #3, and so on. Count how many on-topic assistant messages exist in conversation_history and use the NEXT number. This also applies to translated versions — if #1 was used in Ukrainian, #1 is still consumed and the next response must use #2.
+
+**Types A, B, C, E:** Add ONE short follow-up using the pool below IN SEQUENTIAL ORDER. For the 1st on-topic response of these types use #1, for the 2nd use #2, for the 3rd use #3, and so on. Count how many on-topic assistant messages exist in conversation_history **that were Types A, B, C, or E** and use the **next** pool line. If that line would duplicate wording you already used, use the **next** pool item instead. This also applies to translated versions — if #1 was used in Ukrainian, #1 is still consumed.
 
 Pool (adapt to user's language):
 1. "What else would you like to ask?"
@@ -346,13 +364,50 @@ def get_azure_client() -> AzureOpenAI:
     )
 
 
-def call_azure_api(messages: list, temperature: float = None, max_tokens: int = 3000) -> str:
+def fetch_azure_deployment_names(api_key: str, endpoint: str) -> list[str]:
+    """List deployment ids from Azure OpenAI. Chat calls use deployment name as `model`."""
+    base = endpoint.rstrip("/")
+    url = (
+        f"{base}/openai/deployments"
+        f"?api-version={AZURE_DEPLOYMENTS_LIST_API_VERSION}"
+    )
+    req = urllib.request.Request(url, headers={"api-key": api_key})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            payload = json.loads(resp.read().decode())
+    except (urllib.error.URLError, urllib.error.HTTPError, json.JSONDecodeError, TimeoutError):
+        return []
+    items = payload.get("data") or payload.get("value") or []
+    names = []
+    for d in items:
+        if not isinstance(d, dict):
+            continue
+        name = d.get("id") or d.get("name")
+        if name:
+            names.append(name)
+    return sorted(set(names))
+
+
+def merge_model_options(fetched: list[str]) -> list[str]:
+    """Prefer Azure list; ensure defaults exist for manual pick if API failed."""
+    if fetched:
+        merged = list(dict.fromkeys(fetched + FALLBACK_DEPLOYMENT_NAMES))
+        return merged
+    return list(FALLBACK_DEPLOYMENT_NAMES)
+
+
+def call_azure_api(
+    messages: list,
+    model: str,
+    temperature: float = None,
+    max_tokens: int = 3000,
+) -> str:
     if temperature is None:
         temperature = TEMPERATURE
     client = get_azure_client()
     try:
         stream = client.chat.completions.create(
-            model=MODEL,
+            model=model,
             messages=messages,
             temperature=temperature,
             max_tokens=max_tokens,
@@ -388,16 +443,19 @@ def build_system_prompt(qa_scores_json: dict, messages: list) -> str:
     )
 
 
-def generate_response(qa_scores_json: dict, messages: list) -> tuple:
+def generate_response(
+    qa_scores_json: dict, messages: list, model: str
+) -> tuple:
     """Call the model with the single portrait QA system prompt. Returns (response, log_entry)."""
     system_prompt = build_system_prompt(qa_scores_json, messages)
     api_messages = [{"role": "system", "content": system_prompt}]
     api_messages.extend(
         [{"role": m["role"], "content": m["content"]} for m in messages]
     )
-    response = call_azure_api(api_messages)
+    response = call_azure_api(api_messages, model=model)
     log_entry = {
         "step": "response_generation",
+        "model": model,
         "system_prompt": system_prompt,
         "conversation_messages": [
             {"role": m["role"], "content": m["content"]} for m in messages
@@ -407,11 +465,14 @@ def generate_response(qa_scores_json: dict, messages: list) -> tuple:
     return response, log_entry
 
 
-def process_user_message(qa_scores_json: dict, messages: list) -> tuple:
+def process_user_message(
+    qa_scores_json: dict, messages: list, model: str
+) -> tuple:
     """Returns (response, log_entry)."""
-    response, response_log = generate_response(qa_scores_json, messages)
+    response, response_log = generate_response(qa_scores_json, messages, model)
     log_entry = {
         "timestamp": datetime.now().isoformat(),
+        "model": model,
         "user_message": messages[-1]["content"] if messages else "",
         "steps": [response_log],
         "assistant_response": response,
@@ -432,6 +493,12 @@ def init_session_state():
         st.session_state.qa_scores_json = DEFAULT_QA_SCORES_JSON
     if "pipeline_logs" not in st.session_state:
         st.session_state.pipeline_logs = []
+    if "azure_deployment" not in st.session_state:
+        st.session_state.azure_deployment = DEFAULT_MODEL
+    if "resolved_model" not in st.session_state:
+        st.session_state.resolved_model = None
+    if st.session_state.conversation_started and not st.session_state.resolved_model:
+        st.session_state.resolved_model = DEFAULT_MODEL
 
 
 def get_download_conversation_json() -> str:
@@ -471,6 +538,8 @@ def load_conversation_from_json(json_str: str) -> bool:
 
         st.session_state.messages = msgs
         st.session_state.conversation_started = True
+        if not st.session_state.resolved_model:
+            st.session_state.resolved_model = DEFAULT_MODEL
         return True
     except json.JSONDecodeError as e:
         st.error(f"Invalid JSON: {e}")
@@ -609,6 +678,8 @@ def main():
             latest_log = st.session_state.pipeline_logs[-1]
             with st.expander("Latest request details"):
                 st.markdown(
+                    f"**Model (deployment):** {latest_log.get('model', '—')}")
+                st.markdown(
                     f"**Timestamp:** {latest_log.get('timestamp', '—')}")
                 st.markdown(
                     f"**User message:** {latest_log.get('user_message', '—')}")
@@ -675,6 +746,8 @@ def main():
                 st.session_state.conversation_started = False
                 st.session_state.qa_scores_json = DEFAULT_QA_SCORES_JSON
                 st.session_state.pipeline_logs = []
+                st.session_state.azure_deployment = DEFAULT_MODEL
+                st.session_state.resolved_model = None
                 st.rerun()
 
     # ---- LEFT COLUMN: CHAT ----
@@ -687,6 +760,64 @@ def main():
             '<div class="sub-header">Curaay - Portrait Evaluation Assistant</div>',
             unsafe_allow_html=True
         )
+
+        deployment_fetch = fetch_azure_deployment_names(AZURE_API_KEY, AZURE_ENDPOINT)
+        model_options = merge_model_options(deployment_fetch)
+        if st.session_state.azure_deployment not in model_options:
+            model_options = [st.session_state.azure_deployment] + model_options
+        if (
+            st.session_state.resolved_model
+            and st.session_state.resolved_model not in model_options
+        ):
+            model_options = [st.session_state.resolved_model] + model_options
+        try:
+            model_idx = model_options.index(st.session_state.azure_deployment)
+        except ValueError:
+            model_idx = 0
+
+        # ---- MODEL (before conversation) ----
+        st.markdown("#### 🤖 Azure model (deployment)")
+        st.caption(
+            "У Azure OpenAI для чату передається **ім’я deployment** у вашому ресурсі "
+            f"({AZURE_ENDPOINT}). Список з **List deployments** API; інакше — типові назви. "
+            "Власне ім’я deployment у порталі Azure може відрізнятися (наприклад, `my-gpt-4o`)."
+        )
+        if deployment_fetch:
+            st.caption(f"Знайдено deployments у ресурсі: **{len(deployment_fetch)}**.")
+        else:
+            st.caption(
+                "Список з API не отримано (перевірте ключ і `api-version`) — показано **fallback**-назви."
+            )
+        c1, c2 = st.columns([2, 1])
+        with c1:
+            st.selectbox(
+                "Deployment",
+                options=model_options,
+                index=model_idx,
+                disabled=st.session_state.conversation_started,
+                key="azure_deployment",
+                label_visibility="collapsed",
+            )
+        with c2:
+            custom_dep = st.text_input(
+                "Custom name",
+                placeholder="Інший deployment…",
+                disabled=st.session_state.conversation_started,
+                key="custom_deployment_override",
+            )
+        if st.session_state.conversation_started and st.session_state.resolved_model:
+            api_model = st.session_state.resolved_model
+        else:
+            api_model = (
+                custom_dep.strip()
+                if custom_dep.strip()
+                else st.session_state.azure_deployment
+            )
+
+        if st.session_state.conversation_started:
+            st.caption(
+                f"Поточний deployment: **{api_model}** (змінити можна після Reset)"
+            )
 
         # ---- START CONVERSATION ----
         if not st.session_state.conversation_started:
@@ -715,7 +846,7 @@ def main():
                     ]
                     with st.spinner("Thinking..."):
                         response, log_entry = process_user_message(
-                            qa_scores_json, messages_for_api
+                            qa_scores_json, messages_for_api, api_model
                         )
                     st.session_state.messages.append({
                         "role": "assistant",
@@ -725,7 +856,7 @@ def main():
                 else:
                     with st.spinner("Starting conversation..."):
                         response, log_entry = process_user_message(
-                            qa_scores_json, []
+                            qa_scores_json, [], api_model
                         )
                     st.session_state.messages.append({
                         "role": "assistant",
@@ -738,6 +869,7 @@ def main():
                     }
                     st.session_state.pipeline_logs.append(log_entry)
 
+                st.session_state.resolved_model = api_model
                 st.session_state.conversation_started = True
                 st.rerun()
 
@@ -776,7 +908,9 @@ def main():
 
                 with st.spinner("Thinking..."):
                     response, log_entry = process_user_message(
-                        qa_scores_json, messages_for_api
+                        qa_scores_json,
+                        messages_for_api,
+                        st.session_state.resolved_model or DEFAULT_MODEL,
                     )
 
                 st.session_state.messages.append({
